@@ -264,12 +264,52 @@ type CallID string
 type IdentifiedCallStack struct {
 	CallID    CallID
 	CallStack CallStack
+	Evidence  *CallStackEvidence `json:",omitempty"`
 }
 
 type StackFrame struct {
 	FileID    string
 	Lineno    string
 	FrameType int64
+	Symbol    *FrameSymbol `json:",omitempty"`
+}
+
+// FrameSymbol carries provider-observed symbols without repurposing FileID or Lineno.
+// Missing source locations remain nil; BytecodeIndex is not a source line.
+type FrameSymbol struct {
+	SchemaVersion uint32
+	Provider      string
+	FunctionName  string
+	SourceFile    string
+	SourceLine    *uint32
+	SourceColumn  *uint32
+	// NativeAddress is an unsigned decimal string to preserve full uint64 precision in JSON.
+	NativeAddress *string
+	BytecodeIndex *uint32
+	// RawPosition is an unsigned decimal string interpreted only within PositionDomain.
+	RawPosition       string
+	PositionDomain    string
+	ScopeLookup       string
+	ScopeWalk         string
+	BCIState          string
+	QualityDiagnostic string
+}
+
+// CallStackEvidence records observational provenance, not runtime qualification.
+// PolicyEligibility and GlobalCollectionComplete stay explicitly false for observational evidence.
+type CallStackEvidence struct {
+	SchemaVersion            uint32
+	Provider                 string
+	RuntimeProfile           string
+	EventScope               string
+	IdentityScope            string
+	PolicyEligibility        bool
+	GlobalCollectionComplete bool
+	JVMBuildID               string
+	JVMSHA256                string
+	GadgetRevision           string
+	ProfilerRevision         string
+	PatchSHA256              string
 }
 
 type CallStackNode struct {

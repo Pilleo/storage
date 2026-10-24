@@ -21,9 +21,10 @@ package v1beta1
 // StackFrameApplyConfiguration represents a declarative configuration of the StackFrame type for use
 // with apply.
 type StackFrameApplyConfiguration struct {
-	FileID    *string `json:"fileID,omitempty"`
-	Lineno    *string `json:"lineno,omitempty"`
-	FrameType *int64  `json:"frameType,omitempty"`
+	FileID    *string                        `json:"fileID,omitempty"`
+	Lineno    *string                        `json:"lineno,omitempty"`
+	FrameType *int64                         `json:"frameType,omitempty"`
+	Symbol    *FrameSymbolApplyConfiguration `json:"symbol,omitempty"`
 }
 
 // StackFrameApplyConfiguration constructs a declarative configuration of the StackFrame type for use with
@@ -53,5 +54,13 @@ func (b *StackFrameApplyConfiguration) WithLineno(value string) *StackFrameApply
 // If called multiple times, the FrameType field is set to the value of the last call.
 func (b *StackFrameApplyConfiguration) WithFrameType(value int64) *StackFrameApplyConfiguration {
 	b.FrameType = &value
+	return b
+}
+
+// WithSymbol sets the Symbol field in the declarative configuration to the given value
+// and returns the receiver, so that objects can be built by chaining "With" function invocations.
+// If called multiple times, the Symbol field is set to the value of the last call.
+func (b *StackFrameApplyConfiguration) WithSymbol(value *FrameSymbolApplyConfiguration) *StackFrameApplyConfiguration {
+	b.Symbol = value
 	return b
 }

@@ -1156,13 +1156,13 @@ func TestUnifyIdentifiedCallStacksComplex2(t *testing.T) {
 			name: "Multiple branches at different levels",
 			stacks: []types.IdentifiedCallStack{
 				buildCallStack("id1", []framePath{
-					{{"1", "1", 0}, {"2", "1", 0}, {"3", "1", 0}, {"4", "1", 0}},
+					{{FileID: "1", Lineno: "1"}, {FileID: "2", Lineno: "1"}, {FileID: "3", Lineno: "1"}, {FileID: "4", Lineno: "1"}},
 				}),
 				buildCallStack("id1", []framePath{
-					{{"1", "1", 0}, {"2", "1", 0}, {"3", "2", 0}, {"4", "2", 0}},
+					{{FileID: "1", Lineno: "1"}, {FileID: "2", Lineno: "1"}, {FileID: "3", Lineno: "2"}, {FileID: "4", Lineno: "2"}},
 				}),
 				buildCallStack("id1", []framePath{
-					{{"1", "1", 0}, {"2", "2", 0}, {"3", "3", 0}, {"4", "3", 0}},
+					{{FileID: "1", Lineno: "1"}, {FileID: "2", Lineno: "2"}, {FileID: "3", Lineno: "3"}, {FileID: "4", Lineno: "3"}},
 				}),
 			},
 			expectedSize: 1,
@@ -1179,13 +1179,13 @@ func TestUnifyIdentifiedCallStacksComplex2(t *testing.T) {
 			name: "Multiple call IDs with shared prefixes",
 			stacks: []types.IdentifiedCallStack{
 				buildCallStack("id1", []framePath{
-					{{"1", "1", 0}, {"2", "1", 0}, {"3", "1", 0}},
+					{{FileID: "1", Lineno: "1"}, {FileID: "2", Lineno: "1"}, {FileID: "3", Lineno: "1"}},
 				}),
 				buildCallStack("id2", []framePath{
-					{{"1", "1", 0}, {"2", "1", 0}, {"3", "2", 0}},
+					{{FileID: "1", Lineno: "1"}, {FileID: "2", Lineno: "1"}, {FileID: "3", Lineno: "2"}},
 				}),
 				buildCallStack("id2", []framePath{
-					{{"1", "1", 0}, {"2", "2", 0}, {"3", "3", 0}},
+					{{FileID: "1", Lineno: "1"}, {FileID: "2", Lineno: "2"}, {FileID: "3", Lineno: "3"}},
 				}),
 			},
 			expectedSize: 2,
@@ -1212,10 +1212,10 @@ func TestUnifyIdentifiedCallStacksComplex2(t *testing.T) {
 			name: "Deep branches with reconvergence",
 			stacks: []types.IdentifiedCallStack{
 				buildCallStack("id1", []framePath{
-					{{"1", "1", 0}, {"2", "1", 0}, {"3", "1", 0}, {"4", "1", 0}, {"5", "1", 0}},
+					{{FileID: "1", Lineno: "1"}, {FileID: "2", Lineno: "1"}, {FileID: "3", Lineno: "1"}, {FileID: "4", Lineno: "1"}, {FileID: "5", Lineno: "1"}},
 				}),
 				buildCallStack("id1", []framePath{
-					{{"1", "1", 0}, {"2", "1", 0}, {"3", "2", 0}, {"4", "1", 0}, {"5", "1", 0}},
+					{{FileID: "1", Lineno: "1"}, {FileID: "2", Lineno: "1"}, {FileID: "3", Lineno: "2"}, {FileID: "4", Lineno: "1"}, {FileID: "5", Lineno: "1"}},
 				}),
 			},
 			expectedSize: 1,
@@ -1238,10 +1238,10 @@ func TestUnifyIdentifiedCallStacksComplex2(t *testing.T) {
 			name: "Multiple branches with empty frames",
 			stacks: []types.IdentifiedCallStack{
 				buildCallStack("id1", []framePath{
-					{{"1", "1", 0}, {"", "", 0}, {"3", "1", 0}},
+					{{FileID: "1", Lineno: "1"}, {FileID: "", Lineno: ""}, {FileID: "3", Lineno: "1"}},
 				}),
 				buildCallStack("id1", []framePath{
-					{{"1", "1", 0}, {"2", "2", 0}, {"3", "1", 0}},
+					{{FileID: "1", Lineno: "1"}, {FileID: "2", Lineno: "2"}, {FileID: "3", Lineno: "1"}},
 				}),
 			},
 			expectedSize: 1,
@@ -1258,10 +1258,10 @@ func TestUnifyIdentifiedCallStacksComplex2(t *testing.T) {
 			name: "Cyclic patterns",
 			stacks: []types.IdentifiedCallStack{
 				buildCallStack("id1", []framePath{
-					{{"1", "1", 0}, {"2", "1", 0}, {"3", "1", 0}, {"2", "1", 0}, {"3", "1", 0}},
+					{{FileID: "1", Lineno: "1"}, {FileID: "2", Lineno: "1"}, {FileID: "3", Lineno: "1"}, {FileID: "2", Lineno: "1"}, {FileID: "3", Lineno: "1"}},
 				}),
 				buildCallStack("id1", []framePath{
-					{{"1", "1", 0}, {"2", "1", 0}, {"3", "2", 0}, {"2", "1", 0}, {"3", "1", 0}},
+					{{FileID: "1", Lineno: "1"}, {FileID: "2", Lineno: "1"}, {FileID: "3", Lineno: "2"}, {FileID: "2", Lineno: "1"}, {FileID: "3", Lineno: "1"}},
 				}),
 			},
 			expectedSize: 1,
@@ -1328,31 +1328,31 @@ func TestUnifyCallStacksEdgeCases(t *testing.T) {
 				// First stack
 				buildCallStack("test1", []framePath{
 					{
-						{"1", "1", 0},
-						{"2", "1", 0},
-						{"3", "1", 0},
-						{"4", "1", 0},
-						{"5", "1", 0},
+						{FileID: "1", Lineno: "1"},
+						{FileID: "2", Lineno: "1"},
+						{FileID: "3", Lineno: "1"},
+						{FileID: "4", Lineno: "1"},
+						{FileID: "5", Lineno: "1"},
 					},
 				}),
 				// Second stack with early divergence
 				buildCallStack("test1", []framePath{
 					{
-						{"1", "1", 0},
-						{"2", "2", 0}, // Diverges here
-						{"3", "2", 0},
-						{"4", "2", 0},
-						{"5", "2", 0},
+						{FileID: "1", Lineno: "1"},
+						{FileID: "2", Lineno: "2"}, // Diverges here
+						{FileID: "3", Lineno: "2"},
+						{FileID: "4", Lineno: "2"},
+						{FileID: "5", Lineno: "2"},
 					},
 				}),
 				// Third stack that shares part of first path but diverges later
 				buildCallStack("test1", []framePath{
 					{
-						{"1", "1", 0},
-						{"2", "1", 0},
-						{"3", "1", 0},
-						{"4", "3", 0}, // Diverges later
-						{"5", "3", 0},
+						{FileID: "1", Lineno: "1"},
+						{FileID: "2", Lineno: "1"},
+						{FileID: "3", Lineno: "1"},
+						{FileID: "4", Lineno: "3"}, // Diverges later
+						{FileID: "5", Lineno: "3"},
 					},
 				}),
 			},
@@ -1413,19 +1413,19 @@ func TestUnifyCallStacksEdgeCases(t *testing.T) {
 			stacks: []types.IdentifiedCallStack{
 				buildCallStack("test2", []framePath{
 					{
-						{"1", "1", 0},
-						{"2", "1", 0},
-						{"3", "1", 0},
-						{"0", "4012", 0},
+						{FileID: "1", Lineno: "1"},
+						{FileID: "2", Lineno: "1"},
+						{FileID: "3", Lineno: "1"},
+						{FileID: "0", Lineno: "4012"},
 					},
 				}),
 				buildCallStack("test2", []framePath{
 					{
-						{"1", "1", 0},
-						{"2", "1", 0},
-						{"3", "1", 0},
-						{"4", "1", 0},
-						{"5", "1", 0},
+						{FileID: "1", Lineno: "1"},
+						{FileID: "2", Lineno: "1"},
+						{FileID: "3", Lineno: "1"},
+						{FileID: "4", Lineno: "1"},
+						{FileID: "5", Lineno: "1"},
 					},
 				}),
 			},

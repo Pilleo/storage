@@ -1,0 +1,80 @@
+{
+  "name": "legacy-persisted",
+  "namespace": "kubescape",
+  "resourceVersion": "1",
+  "annotations": {
+    "kubescape.io/managed-by": "User",
+    "kubescape.io/resource-size": "3",
+    "kubescape.io/sync-checksum": "fe75ab78adf1e2d57fb32b6181c68684cb4fabb6cc15f3d604c681fd86064caa"
+  },
+  "Spec": {
+    "Architectures": [
+      "amd64"
+    ],
+    "Capabilities": [
+      "CHOWN"
+    ],
+    "Execs": null,
+    "Opens": null,
+    "Syscalls": [
+      "openat"
+    ],
+    "SeccompProfile": {
+      "Name": "",
+      "Path": "",
+      "Spec": {
+        "Disabled": false,
+        "BaseProfileName": "",
+        "DefaultAction": "",
+        "Architectures": null,
+        "ListenerPath": "",
+        "ListenerMetadata": "",
+        "Syscalls": null,
+        "Flags": null
+      }
+    },
+    "Endpoints": null,
+    "ImageID": "",
+    "ImageTag": "",
+    "PolicyByRuleId": null,
+    "IdentifiedCallStacks": [
+      {
+        "CallID": "legacy",
+        "CallStack": {
+          "Root": {
+            "Children": [
+              {
+                "Children": [
+                  {
+                    "Children": null,
+                    "Frame": {
+                      "FileID": "456",
+                      "Lineno": "20",
+                      "FrameType": 0
+                    }
+                  }
+                ],
+                "Frame": {
+                  "FileID": "123",
+                  "Lineno": "19",
+                  "FrameType": 0
+                }
+              }
+            ],
+            "Frame": {
+              "FileID": "",
+              "Lineno": "",
+              "FrameType": 0
+            }
+          }
+        }
+      }
+    ],
+    "Ingress": null,
+    "Egress": null,
+    "Containers": null,
+    "InitContainers": null,
+    "EphemeralContainers": null
+  },
+  "Status": {}
+}

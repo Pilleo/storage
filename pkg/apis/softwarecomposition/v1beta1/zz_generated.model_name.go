@@ -42,6 +42,11 @@ func (in CallStack) OpenAPIModelName() string {
 }
 
 // OpenAPIModelName returns the OpenAPI model name for this type.
+func (in CallStackEvidence) OpenAPIModelName() string {
+	return "com.github.kubescape.storage.pkg.apis.softwarecomposition.v1beta1.CallStackEvidence"
+}
+
+// OpenAPIModelName returns the OpenAPI model name for this type.
 func (in CallStackNode) OpenAPIModelName() string {
 	return "com.github.kubescape.storage.pkg.apis.softwarecomposition.v1beta1.CallStackNode"
 }
@@ -189,6 +194,11 @@ func (in FileMetadataEntry) OpenAPIModelName() string {
 // OpenAPIModelName returns the OpenAPI model name for this type.
 func (in Fix) OpenAPIModelName() string {
 	return "com.github.kubescape.storage.pkg.apis.softwarecomposition.v1beta1.Fix"
+}
+
+// OpenAPIModelName returns the OpenAPI model name for this type.
+func (in FrameSymbol) OpenAPIModelName() string {
+	return "com.github.kubescape.storage.pkg.apis.softwarecomposition.v1beta1.FrameSymbol"
 }
 
 // OpenAPIModelName returns the OpenAPI model name for this type.

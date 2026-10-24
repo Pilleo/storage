@@ -48,6 +48,8 @@ func (m *CPE) Reset() { *m = CPE{} }
 
 func (m *CallStack) Reset() { *m = CallStack{} }
 
+func (m *CallStackEvidence) Reset() { *m = CallStackEvidence{} }
+
 func (m *CallStackNode) Reset() { *m = CallStackNode{} }
 
 func (m *CollapseConfigEntry) Reset() { *m = CollapseConfigEntry{} }
@@ -107,6 +109,8 @@ func (m *FileLicenseEvidence) Reset() { *m = FileLicenseEvidence{} }
 func (m *FileMetadataEntry) Reset() { *m = FileMetadataEntry{} }
 
 func (m *Fix) Reset() { *m = Fix{} }
+
+func (m *FrameSymbol) Reset() { *m = FrameSymbol{} }
 
 func (m *GeneratedNetworkPolicy) Reset() { *m = GeneratedNetworkPolicy{} }
 
@@ -503,6 +507,93 @@ func (m *CallStack) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	}
 	i--
 	dAtA[i] = 0xa
+	return len(dAtA) - i, nil
+}
+
+func (m *CallStackEvidence) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CallStackEvidence) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CallStackEvidence) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	i -= len(m.PatchSHA256)
+	copy(dAtA[i:], m.PatchSHA256)
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.PatchSHA256)))
+	i--
+	dAtA[i] = 0x62
+	i -= len(m.ProfilerRevision)
+	copy(dAtA[i:], m.ProfilerRevision)
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.ProfilerRevision)))
+	i--
+	dAtA[i] = 0x5a
+	i -= len(m.GadgetRevision)
+	copy(dAtA[i:], m.GadgetRevision)
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.GadgetRevision)))
+	i--
+	dAtA[i] = 0x52
+	i -= len(m.JVMSHA256)
+	copy(dAtA[i:], m.JVMSHA256)
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.JVMSHA256)))
+	i--
+	dAtA[i] = 0x4a
+	i -= len(m.JVMBuildID)
+	copy(dAtA[i:], m.JVMBuildID)
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.JVMBuildID)))
+	i--
+	dAtA[i] = 0x42
+	i--
+	if m.GlobalCollectionComplete {
+		dAtA[i] = 1
+	} else {
+		dAtA[i] = 0
+	}
+	i--
+	dAtA[i] = 0x38
+	i--
+	if m.PolicyEligibility {
+		dAtA[i] = 1
+	} else {
+		dAtA[i] = 0
+	}
+	i--
+	dAtA[i] = 0x30
+	i -= len(m.IdentityScope)
+	copy(dAtA[i:], m.IdentityScope)
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.IdentityScope)))
+	i--
+	dAtA[i] = 0x2a
+	i -= len(m.EventScope)
+	copy(dAtA[i:], m.EventScope)
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.EventScope)))
+	i--
+	dAtA[i] = 0x22
+	i -= len(m.RuntimeProfile)
+	copy(dAtA[i:], m.RuntimeProfile)
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.RuntimeProfile)))
+	i--
+	dAtA[i] = 0x1a
+	i -= len(m.Provider)
+	copy(dAtA[i:], m.Provider)
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Provider)))
+	i--
+	dAtA[i] = 0x12
+	i = encodeVarintGenerated(dAtA, i, uint64(m.SchemaVersion))
+	i--
+	dAtA[i] = 0x8
 	return len(dAtA) - i, nil
 }
 
@@ -2248,6 +2339,99 @@ func (m *Fix) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *FrameSymbol) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *FrameSymbol) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *FrameSymbol) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	i -= len(m.QualityDiagnostic)
+	copy(dAtA[i:], m.QualityDiagnostic)
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.QualityDiagnostic)))
+	i--
+	dAtA[i] = 0x72
+	i -= len(m.BCIState)
+	copy(dAtA[i:], m.BCIState)
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.BCIState)))
+	i--
+	dAtA[i] = 0x6a
+	i -= len(m.ScopeWalk)
+	copy(dAtA[i:], m.ScopeWalk)
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.ScopeWalk)))
+	i--
+	dAtA[i] = 0x62
+	i -= len(m.ScopeLookup)
+	copy(dAtA[i:], m.ScopeLookup)
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.ScopeLookup)))
+	i--
+	dAtA[i] = 0x5a
+	i -= len(m.PositionDomain)
+	copy(dAtA[i:], m.PositionDomain)
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.PositionDomain)))
+	i--
+	dAtA[i] = 0x52
+	i -= len(m.RawPosition)
+	copy(dAtA[i:], m.RawPosition)
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.RawPosition)))
+	i--
+	dAtA[i] = 0x4a
+	if m.BytecodeIndex != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.BytecodeIndex))
+		i--
+		dAtA[i] = 0x40
+	}
+	if m.NativeAddress != nil {
+		i -= len(*m.NativeAddress)
+		copy(dAtA[i:], *m.NativeAddress)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.NativeAddress)))
+		i--
+		dAtA[i] = 0x3a
+	}
+	if m.SourceColumn != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.SourceColumn))
+		i--
+		dAtA[i] = 0x30
+	}
+	if m.SourceLine != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.SourceLine))
+		i--
+		dAtA[i] = 0x28
+	}
+	i -= len(m.SourceFile)
+	copy(dAtA[i:], m.SourceFile)
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.SourceFile)))
+	i--
+	dAtA[i] = 0x22
+	i -= len(m.FunctionName)
+	copy(dAtA[i:], m.FunctionName)
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.FunctionName)))
+	i--
+	dAtA[i] = 0x1a
+	i -= len(m.Provider)
+	copy(dAtA[i:], m.Provider)
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Provider)))
+	i--
+	dAtA[i] = 0x12
+	i = encodeVarintGenerated(dAtA, i, uint64(m.SchemaVersion))
+	i--
+	dAtA[i] = 0x8
+	return len(dAtA) - i, nil
+}
+
 func (m *GeneratedNetworkPolicy) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -2737,6 +2921,18 @@ func (m *IdentifiedCallStack) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.Evidence != nil {
+		{
+			size, err := m.Evidence.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintGenerated(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
 	{
 		size, err := m.CallStack.MarshalToSizedBuffer(dAtA[:i])
 		if err != nil {
@@ -6591,6 +6787,18 @@ func (m *StackFrame) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.Symbol != nil {
+		{
+			size, err := m.Symbol.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintGenerated(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
+	}
 	i = encodeVarintGenerated(dAtA, i, uint64(m.FrameType))
 	i--
 	dAtA[i] = 0x18
@@ -8728,6 +8936,36 @@ func (m *CallStack) Size() (n int) {
 	return n
 }
 
+func (m *CallStackEvidence) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	n += 1 + sovGenerated(uint64(m.SchemaVersion))
+	l = len(m.Provider)
+	n += 1 + l + sovGenerated(uint64(l))
+	l = len(m.RuntimeProfile)
+	n += 1 + l + sovGenerated(uint64(l))
+	l = len(m.EventScope)
+	n += 1 + l + sovGenerated(uint64(l))
+	l = len(m.IdentityScope)
+	n += 1 + l + sovGenerated(uint64(l))
+	n += 2
+	n += 2
+	l = len(m.JVMBuildID)
+	n += 1 + l + sovGenerated(uint64(l))
+	l = len(m.JVMSHA256)
+	n += 1 + l + sovGenerated(uint64(l))
+	l = len(m.GadgetRevision)
+	n += 1 + l + sovGenerated(uint64(l))
+	l = len(m.ProfilerRevision)
+	n += 1 + l + sovGenerated(uint64(l))
+	l = len(m.PatchSHA256)
+	n += 1 + l + sovGenerated(uint64(l))
+	return n
+}
+
 func (m *CallStackNode) Size() (n int) {
 	if m == nil {
 		return 0
@@ -9383,6 +9621,47 @@ func (m *Fix) Size() (n int) {
 	return n
 }
 
+func (m *FrameSymbol) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	n += 1 + sovGenerated(uint64(m.SchemaVersion))
+	l = len(m.Provider)
+	n += 1 + l + sovGenerated(uint64(l))
+	l = len(m.FunctionName)
+	n += 1 + l + sovGenerated(uint64(l))
+	l = len(m.SourceFile)
+	n += 1 + l + sovGenerated(uint64(l))
+	if m.SourceLine != nil {
+		n += 1 + sovGenerated(uint64(*m.SourceLine))
+	}
+	if m.SourceColumn != nil {
+		n += 1 + sovGenerated(uint64(*m.SourceColumn))
+	}
+	if m.NativeAddress != nil {
+		l = len(*m.NativeAddress)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.BytecodeIndex != nil {
+		n += 1 + sovGenerated(uint64(*m.BytecodeIndex))
+	}
+	l = len(m.RawPosition)
+	n += 1 + l + sovGenerated(uint64(l))
+	l = len(m.PositionDomain)
+	n += 1 + l + sovGenerated(uint64(l))
+	l = len(m.ScopeLookup)
+	n += 1 + l + sovGenerated(uint64(l))
+	l = len(m.ScopeWalk)
+	n += 1 + l + sovGenerated(uint64(l))
+	l = len(m.BCIState)
+	n += 1 + l + sovGenerated(uint64(l))
+	l = len(m.QualityDiagnostic)
+	n += 1 + l + sovGenerated(uint64(l))
+	return n
+}
+
 func (m *GeneratedNetworkPolicy) Size() (n int) {
 	if m == nil {
 		return 0
@@ -9580,6 +9859,10 @@ func (m *IdentifiedCallStack) Size() (n int) {
 	n += 1 + l + sovGenerated(uint64(l))
 	l = m.CallStack.Size()
 	n += 1 + l + sovGenerated(uint64(l))
+	if m.Evidence != nil {
+		l = m.Evidence.Size()
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	return n
 }
 
@@ -9593,6 +9876,10 @@ func (m *IgnoreRule) Size() (n int) {
 	n += 1 + l + sovGenerated(uint64(l))
 	l = len(m.FixState)
 	n += 1 + l + sovGenerated(uint64(l))
+	if m.Package != nil {
+		l = m.Package.Size()
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	l = len(m.SourceKind)
 	n += 1 + l + sovGenerated(uint64(l))
 	l = len(m.SourceName)
@@ -9603,10 +9890,6 @@ func (m *IgnoreRule) Size() (n int) {
 	n += 1 + l + sovGenerated(uint64(l))
 	l = len(m.ImpactStatement)
 	n += 1 + l + sovGenerated(uint64(l))
-	if m.Package != nil {
-		l = m.Package.Size()
-		n += 1 + l + sovGenerated(uint64(l))
-	}
 	return n
 }
 
@@ -11036,6 +11319,10 @@ func (m *StackFrame) Size() (n int) {
 	l = len(m.Lineno)
 	n += 1 + l + sovGenerated(uint64(l))
 	n += 1 + sovGenerated(uint64(m.FrameType))
+	if m.Symbol != nil {
+		l = m.Symbol.Size()
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	return n
 }
 
@@ -11828,6 +12115,27 @@ func (this *CallStack) String() string {
 	}, "")
 	return s
 }
+func (this *CallStackEvidence) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&CallStackEvidence{`,
+		`SchemaVersion:` + fmt.Sprintf("%v", this.SchemaVersion) + `,`,
+		`Provider:` + fmt.Sprintf("%v", this.Provider) + `,`,
+		`RuntimeProfile:` + fmt.Sprintf("%v", this.RuntimeProfile) + `,`,
+		`EventScope:` + fmt.Sprintf("%v", this.EventScope) + `,`,
+		`IdentityScope:` + fmt.Sprintf("%v", this.IdentityScope) + `,`,
+		`PolicyEligibility:` + fmt.Sprintf("%v", this.PolicyEligibility) + `,`,
+		`GlobalCollectionComplete:` + fmt.Sprintf("%v", this.GlobalCollectionComplete) + `,`,
+		`JVMBuildID:` + fmt.Sprintf("%v", this.JVMBuildID) + `,`,
+		`JVMSHA256:` + fmt.Sprintf("%v", this.JVMSHA256) + `,`,
+		`GadgetRevision:` + fmt.Sprintf("%v", this.GadgetRevision) + `,`,
+		`ProfilerRevision:` + fmt.Sprintf("%v", this.ProfilerRevision) + `,`,
+		`PatchSHA256:` + fmt.Sprintf("%v", this.PatchSHA256) + `,`,
+		`}`,
+	}, "")
+	return s
+}
 func (this *CallStackNode) String() string {
 	if this == nil {
 		return "nil"
@@ -12366,6 +12674,29 @@ func (this *Fix) String() string {
 	}, "")
 	return s
 }
+func (this *FrameSymbol) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&FrameSymbol{`,
+		`SchemaVersion:` + fmt.Sprintf("%v", this.SchemaVersion) + `,`,
+		`Provider:` + fmt.Sprintf("%v", this.Provider) + `,`,
+		`FunctionName:` + fmt.Sprintf("%v", this.FunctionName) + `,`,
+		`SourceFile:` + fmt.Sprintf("%v", this.SourceFile) + `,`,
+		`SourceLine:` + valueToStringGenerated(this.SourceLine) + `,`,
+		`SourceColumn:` + valueToStringGenerated(this.SourceColumn) + `,`,
+		`NativeAddress:` + valueToStringGenerated(this.NativeAddress) + `,`,
+		`BytecodeIndex:` + valueToStringGenerated(this.BytecodeIndex) + `,`,
+		`RawPosition:` + fmt.Sprintf("%v", this.RawPosition) + `,`,
+		`PositionDomain:` + fmt.Sprintf("%v", this.PositionDomain) + `,`,
+		`ScopeLookup:` + fmt.Sprintf("%v", this.ScopeLookup) + `,`,
+		`ScopeWalk:` + fmt.Sprintf("%v", this.ScopeWalk) + `,`,
+		`BCIState:` + fmt.Sprintf("%v", this.BCIState) + `,`,
+		`QualityDiagnostic:` + fmt.Sprintf("%v", this.QualityDiagnostic) + `,`,
+		`}`,
+	}, "")
+	return s
+}
 func (this *GeneratedNetworkPolicy) String() string {
 	if this == nil {
 		return "nil"
@@ -12512,6 +12843,7 @@ func (this *IdentifiedCallStack) String() string {
 	s := strings.Join([]string{`&IdentifiedCallStack{`,
 		`CallID:` + fmt.Sprintf("%v", this.CallID) + `,`,
 		`CallStack:` + strings.Replace(strings.Replace(this.CallStack.String(), "CallStack", "CallStack", 1), `&`, ``, 1) + `,`,
+		`Evidence:` + strings.Replace(this.Evidence.String(), "CallStackEvidence", "CallStackEvidence", 1) + `,`,
 		`}`,
 	}, "")
 	return s
@@ -12524,6 +12856,11 @@ func (this *IgnoreRule) String() string {
 		`Vulnerability:` + fmt.Sprintf("%v", this.Vulnerability) + `,`,
 		`FixState:` + fmt.Sprintf("%v", this.FixState) + `,`,
 		`Package:` + strings.Replace(this.Package.String(), "IgnoreRulePackage", "IgnoreRulePackage", 1) + `,`,
+		`SourceKind:` + fmt.Sprintf("%v", this.SourceKind) + `,`,
+		`SourceName:` + fmt.Sprintf("%v", this.SourceName) + `,`,
+		`SourceNamespace:` + fmt.Sprintf("%v", this.SourceNamespace) + `,`,
+		`Justification:` + fmt.Sprintf("%v", this.Justification) + `,`,
+		`ImpactStatement:` + fmt.Sprintf("%v", this.ImpactStatement) + `,`,
 		`}`,
 	}, "")
 	return s
@@ -13659,6 +13996,7 @@ func (this *StackFrame) String() string {
 		`FileID:` + fmt.Sprintf("%v", this.FileID) + `,`,
 		`Lineno:` + fmt.Sprintf("%v", this.Lineno) + `,`,
 		`FrameType:` + fmt.Sprintf("%v", this.FrameType) + `,`,
+		`Symbol:` + strings.Replace(this.Symbol.String(), "FrameSymbol", "FrameSymbol", 1) + `,`,
 		`}`,
 	}, "")
 	return s
@@ -14719,6 +15057,403 @@ func (m *CallStack) Unmarshal(dAtA []byte) error {
 			if err := m.Root.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGenerated(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CallStackEvidence) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGenerated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CallStackEvidence: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CallStackEvidence: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SchemaVersion", wireType)
+			}
+			m.SchemaVersion = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SchemaVersion |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Provider", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Provider = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RuntimeProfile", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RuntimeProfile = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field EventScope", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.EventScope = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field IdentityScope", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.IdentityScope = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PolicyEligibility", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.PolicyEligibility = bool(v != 0)
+		case 7:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field GlobalCollectionComplete", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.GlobalCollectionComplete = bool(v != 0)
+		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field JVMBuildID", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.JVMBuildID = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 9:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field JVMSHA256", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.JVMSHA256 = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 10:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field GadgetRevision", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.GadgetRevision = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 11:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ProfilerRevision", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ProfilerRevision = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 12:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PatchSHA256", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PatchSHA256 = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -20110,6 +20845,456 @@ func (m *Fix) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *FrameSymbol) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGenerated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: FrameSymbol: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: FrameSymbol: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SchemaVersion", wireType)
+			}
+			m.SchemaVersion = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SchemaVersion |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Provider", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Provider = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field FunctionName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.FunctionName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SourceFile", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SourceFile = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SourceLine", wireType)
+			}
+			var v uint32
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.SourceLine = &v
+		case 6:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SourceColumn", wireType)
+			}
+			var v uint32
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.SourceColumn = &v
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NativeAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			s := string(dAtA[iNdEx:postIndex])
+			m.NativeAddress = &s
+			iNdEx = postIndex
+		case 8:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BytecodeIndex", wireType)
+			}
+			var v uint32
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.BytecodeIndex = &v
+		case 9:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RawPosition", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RawPosition = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 10:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PositionDomain", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PositionDomain = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 11:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ScopeLookup", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ScopeLookup = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 12:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ScopeWalk", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ScopeWalk = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 13:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BCIState", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.BCIState = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 14:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field QualityDiagnostic", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.QualityDiagnostic = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGenerated(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *GeneratedNetworkPolicy) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -21642,6 +22827,42 @@ func (m *IdentifiedCallStack) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if err := m.CallStack.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Evidence", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Evidence == nil {
+				m.Evidence = &CallStackEvidence{}
+			}
+			if err := m.Evidence.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -33906,6 +35127,42 @@ func (m *StackFrame) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Symbol", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Symbol == nil {
+				m.Symbol = &FrameSymbol{}
+			}
+			if err := m.Symbol.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])

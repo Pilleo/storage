@@ -25,8 +25,9 @@ import (
 // IdentifiedCallStackApplyConfiguration represents a declarative configuration of the IdentifiedCallStack type for use
 // with apply.
 type IdentifiedCallStackApplyConfiguration struct {
-	CallID    *softwarecompositionv1beta1.CallID `json:"callID,omitempty"`
-	CallStack *CallStackApplyConfiguration       `json:"callStack,omitempty"`
+	CallID    *softwarecompositionv1beta1.CallID   `json:"callID,omitempty"`
+	CallStack *CallStackApplyConfiguration         `json:"callStack,omitempty"`
+	Evidence  *CallStackEvidenceApplyConfiguration `json:"evidence,omitempty"`
 }
 
 // IdentifiedCallStackApplyConfiguration constructs a declarative configuration of the IdentifiedCallStack type for use with
@@ -48,5 +49,13 @@ func (b *IdentifiedCallStackApplyConfiguration) WithCallID(value softwarecomposi
 // If called multiple times, the CallStack field is set to the value of the last call.
 func (b *IdentifiedCallStackApplyConfiguration) WithCallStack(value *CallStackApplyConfiguration) *IdentifiedCallStackApplyConfiguration {
 	b.CallStack = value
+	return b
+}
+
+// WithEvidence sets the Evidence field in the declarative configuration to the given value
+// and returns the receiver, so that objects can be built by chaining "With" function invocations.
+// If called multiple times, the Evidence field is set to the value of the last call.
+func (b *IdentifiedCallStackApplyConfiguration) WithEvidence(value *CallStackEvidenceApplyConfiguration) *IdentifiedCallStackApplyConfiguration {
+	b.Evidence = value
 	return b
 }

@@ -1,35 +1,55 @@
 package callstack
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
+	"encoding/json"
+	"fmt"
 	"sort"
 	"strings"
 
-	"github.com/dghubble/trie"
 	types "github.com/kubescape/storage/pkg/apis/softwarecomposition"
 )
 
 // framesEqual checks if two StackFrames are equal
 func framesEqual(f1, f2 types.StackFrame) bool {
-	return f1.FileID == f2.FileID && f1.Lineno == f2.Lineno
+	if f1.Symbol == nil || f2.Symbol == nil {
+		return f1.Symbol == nil && f2.Symbol == nil && f1.FileID == f2.FileID && f1.Lineno == f2.Lineno
+	}
+	return frameKey(f1) == frameKey(f2)
 }
 
 // isEmptyFrame checks if a StackFrame is empty
 func isEmptyFrame(frame types.StackFrame) bool {
-	return frame.FileID == "" && frame.Lineno == ""
+	return frame.FileID == "" && frame.Lineno == "" && frame.Symbol == nil
 }
 
 // frameKey returns a string key representing a stack frame
 func frameKey(frame types.StackFrame) string {
-	return frame.FileID + ":" + frame.Lineno
+	if frame.Symbol == nil {
+		return frame.FileID + ":" + frame.Lineno
+	}
+	b, err := json.Marshal(frame)
+	if err != nil {
+		panic(err) // Closed scalar/pointer API type; marshaling has no failure input.
+	}
+	h := sha256.Sum256(b)
+	return "symbol-v1:" + hex.EncodeToString(h[:])
 }
 
-// pathKey converts a call stack path to a single string key
+// pathKey tags and byte-length-prefixes components without reserving any legacy string values.
 func pathKey(nodes []types.CallStackNode) string {
-	parts := make([]string, len(nodes))
-	for i, node := range nodes {
-		parts[i] = frameKey(node.Frame)
+	var key strings.Builder
+	for _, node := range nodes {
+		frame := node.Frame
+		if frame.Symbol == nil {
+			fmt.Fprintf(&key, "l%d:%s%d:%s", len(frame.FileID), frame.FileID, len(frame.Lineno), frame.Lineno)
+		} else {
+			symbol := frameKey(frame)
+			fmt.Fprintf(&key, "s%d:%s", len(symbol), symbol)
+		}
 	}
-	return strings.Join(parts, "/")
+	return key.String()
 }
 
 // getCallStackPaths returns all complete paths in a call stack
@@ -61,38 +81,12 @@ func getCallStackPaths(cs types.CallStack) [][]types.CallStackNode {
 	return paths
 }
 
-// parsePath converts a path string back to frame sequence
-func parsePath(path string) []types.StackFrame {
-	if path == "" {
-		return nil
+// reconstructCallStack builds a CallStack from owned frame paths.
+func reconstructCallStack(paths map[string][]types.StackFrame) types.CallStack {
+	allPaths := make([][]types.StackFrame, 0, len(paths))
+	for _, frames := range paths {
+		allPaths = append(allPaths, frames)
 	}
-	parts := strings.Split(path, "/")
-	frames := make([]types.StackFrame, len(parts))
-	for i, part := range parts {
-		frameParts := strings.Split(part, ":")
-		if len(frameParts) == 2 {
-			frames[i] = types.StackFrame{
-				FileID: frameParts[0],
-				Lineno: frameParts[1],
-			}
-		}
-	}
-	return frames
-}
-
-// reconstructCallStack builds a CallStack from a trie
-func reconstructCallStack(t *trie.PathTrie) types.CallStack {
-	var allPaths [][]types.StackFrame
-	_ = t.Walk(func(key string, value interface{}) error {
-		if value == nil {
-			return nil
-		}
-		frames := parsePath(key)
-		if len(frames) > 0 {
-			allPaths = append(allPaths, frames)
-		}
-		return nil
-	})
 
 	// Sort paths by length (longest first) then by content
 	sort.Slice(allPaths, func(i, j int) bool {
@@ -106,6 +100,9 @@ func reconstructCallStack(t *trie.PathTrie) types.CallStack {
 			}
 			if allPaths[i][k].Lineno != allPaths[j][k].Lineno {
 				return allPaths[i][k].Lineno < allPaths[j][k].Lineno
+			}
+			if ki, kj := frameKey(allPaths[i][k]), frameKey(allPaths[j][k]); ki != kj {
+				return ki < kj
 			}
 		}
 		return false
@@ -145,33 +142,43 @@ func reconstructCallStack(t *trie.PathTrie) types.CallStack {
 
 // UnifyIdentifiedCallStacks takes a list of IdentifiedCallStack and returns a list of unified CallStacks
 func UnifyIdentifiedCallStacks(stacks []types.IdentifiedCallStack) []types.IdentifiedCallStack {
-	stacksByID := make(map[types.CallID][]types.CallStack)
+	type groupKey struct {
+		callID      types.CallID
+		hasEvidence bool
+		evidence    types.CallStackEvidence
+	}
+	stacksByGroup := make(map[groupKey][]types.CallStack)
 	for _, stack := range stacks {
-		stacksByID[stack.CallID] = append(stacksByID[stack.CallID], stack.CallStack)
+		key := groupKey{callID: stack.CallID, hasEvidence: stack.Evidence != nil}
+		if stack.Evidence != nil {
+			key.evidence = *stack.Evidence
+		}
+		stacksByGroup[key] = append(stacksByGroup[key], stack.CallStack)
 	}
 
 	var result []types.IdentifiedCallStack
-	for id, groupStacks := range stacksByID {
-		if len(groupStacks) == 0 {
-			continue
-		}
-
-		// Build trie directly from all paths
-		t := trie.NewPathTrie()
+	for key, groupStacks := range stacksByGroup {
+		pathsByKey := make(map[string][]types.StackFrame)
 		for _, cs := range groupStacks {
 			paths := getCallStackPaths(cs)
 			for _, path := range paths {
-				key := pathKey(path)
-				t.Put(key, path)
+				frames := make([]types.StackFrame, len(path))
+				for i, node := range path {
+					frames[i] = node.Frame
+					frames[i].Symbol = node.Frame.Symbol.DeepCopy()
+				}
+				pathsByKey[pathKey(path)] = frames
 			}
 		}
 
-		// Reconstruct unified call stack from trie
-		unified := reconstructCallStack(t)
-
+		var evidence *types.CallStackEvidence
+		if key.hasEvidence {
+			evidence = key.evidence.DeepCopy()
+		}
 		result = append(result, types.IdentifiedCallStack{
-			CallID:    id,
-			CallStack: unified,
+			CallID:    key.callID,
+			CallStack: reconstructCallStack(pathsByKey),
+			Evidence:  evidence,
 		})
 	}
 

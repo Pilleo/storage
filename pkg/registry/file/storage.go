@@ -387,7 +387,18 @@ func (s *StorageImpl) CreateWithConn(ctx context.Context, conn *sqlite.Conn, key
 		return fmt.Errorf("processor.AfterCreate: %w", err)
 	}
 	// publish event to watchers
-	s.watchDispatcher.Added(key, metaOut, obj)
+	watchMeta := metaOut
+	_, containerProfile := obj.(*softwarecomposition.ContainerProfile)
+	if containerProfile && metaOut != nil {
+		// Keep metadata watches unchanged while returning the persisted Create payload.
+		watchMeta = metaOut.DeepCopyObject()
+	}
+	s.watchDispatcher.Added(key, watchMeta, obj)
+	if containerProfile && metaOut != nil {
+		if err := s.get(ctx, conn, key, storage.GetOptions{}, metaOut, hasWriteLock); err != nil {
+			return fmt.Errorf("read created ContainerProfile: %w", err)
+		}
+	}
 	return nil
 }
 

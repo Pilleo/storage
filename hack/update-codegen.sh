@@ -37,13 +37,27 @@ if [[ -n "${API_KNOWN_VIOLATIONS_DIR:-}" ]]; then
     fi
 fi
 
+# Generate model names only for our API; gen_openapi also includes dependency
+# packages, whose model-name files must remain read-only module inputs.
+(
+    cd "${CODEGEN_PKG}"
+    GO111MODULE=on go install k8s.io/kube-openapi/cmd/openapi-gen
+)
+"${GOBIN}/openapi-gen" \
+    --output-dir "${SCRIPT_ROOT}/pkg/generated/openapi" \
+    --output-pkg "${THIS_PKG}/pkg/generated/openapi" \
+    --output-file zz_generated.openapi.go \
+    --go-header-file "${SCRIPT_ROOT}/hack/boilerplate.go.txt" \
+    --report-filename /dev/null \
+    --output-model-name-file zz_generated.model_name.go \
+    "${THIS_PKG}/pkg/apis/softwarecomposition/v1beta1"
+
 kube::codegen::gen_openapi \
     --output-dir "${SCRIPT_ROOT}/pkg/generated/openapi" \
     --output-pkg "${THIS_PKG}/pkg/generated/openapi" \
     --report-filename "${report_filename:-"/dev/null"}" \
     ${update_report:+"${update_report}"} \
     --boilerplate "${SCRIPT_ROOT}/hack/boilerplate.go.txt" \
-    --output-model-name-file zz_generated.model_name.go \
     "${SCRIPT_ROOT}/pkg/apis"
 
 kube::codegen::gen_client \

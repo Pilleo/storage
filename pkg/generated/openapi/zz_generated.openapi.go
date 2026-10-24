@@ -37,6 +37,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		v1beta1.Arg{}.OpenAPIModelName():                                        schema_pkg_apis_softwarecomposition_v1beta1_Arg(ref),
 		v1beta1.CPE{}.OpenAPIModelName():                                        schema_pkg_apis_softwarecomposition_v1beta1_CPE(ref),
 		v1beta1.CallStack{}.OpenAPIModelName():                                  schema_pkg_apis_softwarecomposition_v1beta1_CallStack(ref),
+		v1beta1.CallStackEvidence{}.OpenAPIModelName():                          schema_pkg_apis_softwarecomposition_v1beta1_CallStackEvidence(ref),
 		v1beta1.CallStackNode{}.OpenAPIModelName():                              schema_pkg_apis_softwarecomposition_v1beta1_CallStackNode(ref),
 		v1beta1.CollapseConfigEntry{}.OpenAPIModelName():                        schema_pkg_apis_softwarecomposition_v1beta1_CollapseConfigEntry(ref),
 		v1beta1.CollapseConfiguration{}.OpenAPIModelName():                      schema_pkg_apis_softwarecomposition_v1beta1_CollapseConfiguration(ref),
@@ -67,6 +68,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		v1beta1.FileLicenseEvidence{}.OpenAPIModelName():                        schema_pkg_apis_softwarecomposition_v1beta1_FileLicenseEvidence(ref),
 		v1beta1.FileMetadataEntry{}.OpenAPIModelName():                          schema_pkg_apis_softwarecomposition_v1beta1_FileMetadataEntry(ref),
 		v1beta1.Fix{}.OpenAPIModelName():                                        schema_pkg_apis_softwarecomposition_v1beta1_Fix(ref),
+		v1beta1.FrameSymbol{}.OpenAPIModelName():                                schema_pkg_apis_softwarecomposition_v1beta1_FrameSymbol(ref),
 		v1beta1.GeneratedNetworkPolicy{}.OpenAPIModelName():                     schema_pkg_apis_softwarecomposition_v1beta1_GeneratedNetworkPolicy(ref),
 		v1beta1.GeneratedNetworkPolicyList{}.OpenAPIModelName():                 schema_pkg_apis_softwarecomposition_v1beta1_GeneratedNetworkPolicyList(ref),
 		v1beta1.GrypeDocument{}.OpenAPIModelName():                              schema_pkg_apis_softwarecomposition_v1beta1_GrypeDocument(ref),
@@ -367,6 +369,99 @@ func schema_pkg_apis_softwarecomposition_v1beta1_CallStack(ref common.ReferenceC
 		},
 		Dependencies: []string{
 			v1beta1.CallStackNode{}.OpenAPIModelName()},
+	}
+}
+
+func schema_pkg_apis_softwarecomposition_v1beta1_CallStackEvidence(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "CallStackEvidence records observational provenance, not runtime qualification. PolicyEligibility and GlobalCollectionComplete stay explicitly false for observational evidence.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"schemaVersion": {
+						SchemaProps: spec.SchemaProps{
+							Default: 0,
+							Type:    []string{"integer"},
+							Format:  "int64",
+						},
+					},
+					"provider": {
+						SchemaProps: spec.SchemaProps{
+							Default: "",
+							Type:    []string{"string"},
+							Format:  "",
+						},
+					},
+					"runtimeProfile": {
+						SchemaProps: spec.SchemaProps{
+							Default: "",
+							Type:    []string{"string"},
+							Format:  "",
+						},
+					},
+					"eventScope": {
+						SchemaProps: spec.SchemaProps{
+							Default: "",
+							Type:    []string{"string"},
+							Format:  "",
+						},
+					},
+					"identityScope": {
+						SchemaProps: spec.SchemaProps{
+							Default: "",
+							Type:    []string{"string"},
+							Format:  "",
+						},
+					},
+					"policyEligibility": {
+						SchemaProps: spec.SchemaProps{
+							Default: false,
+							Type:    []string{"boolean"},
+							Format:  "",
+						},
+					},
+					"globalCollectionComplete": {
+						SchemaProps: spec.SchemaProps{
+							Default: false,
+							Type:    []string{"boolean"},
+							Format:  "",
+						},
+					},
+					"jvmBuildID": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"jvmSHA256": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"gadgetRevision": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"profilerRevision": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"patchSHA256": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+				},
+				Required: []string{"schemaVersion", "provider", "runtimeProfile", "eventScope", "identityScope", "policyEligibility", "globalCollectionComplete"},
+			},
+		},
 	}
 }
 
@@ -2019,6 +2114,108 @@ func schema_pkg_apis_softwarecomposition_v1beta1_Fix(ref common.ReferenceCallbac
 	}
 }
 
+func schema_pkg_apis_softwarecomposition_v1beta1_FrameSymbol(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "FrameSymbol carries provider-observed symbols without repurposing FileID or Lineno. Missing source locations remain nil; BytecodeIndex is not a source line.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"schemaVersion": {
+						SchemaProps: spec.SchemaProps{
+							Default: 0,
+							Type:    []string{"integer"},
+							Format:  "int64",
+						},
+					},
+					"provider": {
+						SchemaProps: spec.SchemaProps{
+							Default: "",
+							Type:    []string{"string"},
+							Format:  "",
+						},
+					},
+					"functionName": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"sourceFile": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"sourceLine": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"integer"},
+							Format: "int64",
+						},
+					},
+					"sourceColumn": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"integer"},
+							Format: "int64",
+						},
+					},
+					"nativeAddress": {
+						SchemaProps: spec.SchemaProps{
+							Description: "NativeAddress is an unsigned decimal string to preserve full uint64 precision in JSON.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"bytecodeIndex": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"integer"},
+							Format: "int64",
+						},
+					},
+					"rawPosition": {
+						SchemaProps: spec.SchemaProps{
+							Description: "RawPosition is an unsigned decimal string interpreted only within PositionDomain.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"positionDomain": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"scopeLookup": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"scopeWalk": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"bciState": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"qualityDiagnostic": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+				},
+				Required: []string{"schemaVersion", "provider"},
+			},
+		},
+	}
+}
+
 func schema_pkg_apis_softwarecomposition_v1beta1_GeneratedNetworkPolicy(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -2481,12 +2678,17 @@ func schema_pkg_apis_softwarecomposition_v1beta1_IdentifiedCallStack(ref common.
 							Ref:     ref(v1beta1.CallStack{}.OpenAPIModelName()),
 						},
 					},
+					"evidence": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref(v1beta1.CallStackEvidence{}.OpenAPIModelName()),
+						},
+					},
 				},
 				Required: []string{"callID", "callStack"},
 			},
 		},
 		Dependencies: []string{
-			v1beta1.CallStack{}.OpenAPIModelName()},
+			v1beta1.CallStack{}.OpenAPIModelName(), v1beta1.CallStackEvidence{}.OpenAPIModelName()},
 	}
 }
 
@@ -2515,8 +2717,9 @@ func schema_pkg_apis_softwarecomposition_v1beta1_IgnoreRule(ref common.Reference
 					},
 					"sourceKind": {
 						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
+							Description: "SourceKind, SourceName and SourceNamespace identify the object that caused this suppression (e.g. \"SecurityException\", its name, and namespace for a namespaced object).",
+							Type:        []string{"string"},
+							Format:      "",
 						},
 					},
 					"sourceName": {
@@ -2533,8 +2736,9 @@ func schema_pkg_apis_softwarecomposition_v1beta1_IgnoreRule(ref common.Reference
 					},
 					"justification": {
 						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
+							Description: "Justification and ImpactStatement carry the stated reason for the suppression, in VEX vocabulary.",
+							Type:        []string{"string"},
+							Format:      "",
 						},
 					},
 					"impactStatement": {
@@ -5824,10 +6028,17 @@ func schema_pkg_apis_softwarecomposition_v1beta1_StackFrame(ref common.Reference
 							Format:  "int64",
 						},
 					},
+					"symbol": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref(v1beta1.FrameSymbol{}.OpenAPIModelName()),
+						},
+					},
 				},
 				Required: []string{"fileID", "lineno", "frameType"},
 			},
 		},
+		Dependencies: []string{
+			v1beta1.FrameSymbol{}.OpenAPIModelName()},
 	}
 }
 

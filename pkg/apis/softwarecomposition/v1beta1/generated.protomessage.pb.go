@@ -29,6 +29,8 @@ func (*CPE) ProtoMessage() {}
 
 func (*CallStack) ProtoMessage() {}
 
+func (*CallStackEvidence) ProtoMessage() {}
+
 func (*CallStackNode) ProtoMessage() {}
 
 func (*CollapseConfigEntry) ProtoMessage() {}
@@ -88,6 +90,8 @@ func (*FileLicenseEvidence) ProtoMessage() {}
 func (*FileMetadataEntry) ProtoMessage() {}
 
 func (*Fix) ProtoMessage() {}
+
+func (*FrameSymbol) ProtoMessage() {}
 
 func (*GeneratedNetworkPolicy) ProtoMessage() {}
 

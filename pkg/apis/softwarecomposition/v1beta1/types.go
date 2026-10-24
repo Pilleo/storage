@@ -202,14 +202,54 @@ type OpenCalls struct {
 type CallID string
 
 type IdentifiedCallStack struct {
-	CallID    CallID    `json:"callID" protobuf:"bytes,1,opt,name=callID"`
-	CallStack CallStack `json:"callStack" protobuf:"bytes,2,opt,name=callStack"`
+	CallID    CallID             `json:"callID" protobuf:"bytes,1,opt,name=callID"`
+	CallStack CallStack          `json:"callStack" protobuf:"bytes,2,opt,name=callStack"`
+	Evidence  *CallStackEvidence `json:"evidence,omitempty" protobuf:"bytes,3,opt,name=evidence"`
 }
 
 type StackFrame struct {
-	FileID    string `json:"fileID" protobuf:"bytes,1,opt,name=fileID"`
-	Lineno    string `json:"lineno" protobuf:"bytes,2,opt,name=lineno"`
-	FrameType int64  `json:"frameType" protobuf:"bytes,3,opt,name=frameType"`
+	FileID    string       `json:"fileID" protobuf:"bytes,1,opt,name=fileID"`
+	Lineno    string       `json:"lineno" protobuf:"bytes,2,opt,name=lineno"`
+	FrameType int64        `json:"frameType" protobuf:"bytes,3,opt,name=frameType"`
+	Symbol    *FrameSymbol `json:"symbol,omitempty" protobuf:"bytes,4,opt,name=symbol"`
+}
+
+// FrameSymbol carries provider-observed symbols without repurposing FileID or Lineno.
+// Missing source locations remain nil; BytecodeIndex is not a source line.
+type FrameSymbol struct {
+	SchemaVersion uint32  `json:"schemaVersion" protobuf:"varint,1,opt,name=schemaVersion"`
+	Provider      string  `json:"provider" protobuf:"bytes,2,opt,name=provider"`
+	FunctionName  string  `json:"functionName,omitempty" protobuf:"bytes,3,opt,name=functionName"`
+	SourceFile    string  `json:"sourceFile,omitempty" protobuf:"bytes,4,opt,name=sourceFile"`
+	SourceLine    *uint32 `json:"sourceLine,omitempty" protobuf:"varint,5,opt,name=sourceLine"`
+	SourceColumn  *uint32 `json:"sourceColumn,omitempty" protobuf:"varint,6,opt,name=sourceColumn"`
+	// NativeAddress is an unsigned decimal string to preserve full uint64 precision in JSON.
+	NativeAddress *string `json:"nativeAddress,omitempty" protobuf:"bytes,7,opt,name=nativeAddress"`
+	BytecodeIndex *uint32 `json:"bytecodeIndex,omitempty" protobuf:"varint,8,opt,name=bytecodeIndex"`
+	// RawPosition is an unsigned decimal string interpreted only within PositionDomain.
+	RawPosition       string `json:"rawPosition,omitempty" protobuf:"bytes,9,opt,name=rawPosition"`
+	PositionDomain    string `json:"positionDomain,omitempty" protobuf:"bytes,10,opt,name=positionDomain"`
+	ScopeLookup       string `json:"scopeLookup,omitempty" protobuf:"bytes,11,opt,name=scopeLookup"`
+	ScopeWalk         string `json:"scopeWalk,omitempty" protobuf:"bytes,12,opt,name=scopeWalk"`
+	BCIState          string `json:"bciState,omitempty" protobuf:"bytes,13,opt,name=bciState"`
+	QualityDiagnostic string `json:"qualityDiagnostic,omitempty" protobuf:"bytes,14,opt,name=qualityDiagnostic"`
+}
+
+// CallStackEvidence records observational provenance, not runtime qualification.
+// PolicyEligibility and GlobalCollectionComplete stay explicitly false for observational evidence.
+type CallStackEvidence struct {
+	SchemaVersion            uint32 `json:"schemaVersion" protobuf:"varint,1,opt,name=schemaVersion"`
+	Provider                 string `json:"provider" protobuf:"bytes,2,opt,name=provider"`
+	RuntimeProfile           string `json:"runtimeProfile" protobuf:"bytes,3,opt,name=runtimeProfile"`
+	EventScope               string `json:"eventScope" protobuf:"bytes,4,opt,name=eventScope"`
+	IdentityScope            string `json:"identityScope" protobuf:"bytes,5,opt,name=identityScope"`
+	PolicyEligibility        bool   `json:"policyEligibility" protobuf:"varint,6,opt,name=policyEligibility"`
+	GlobalCollectionComplete bool   `json:"globalCollectionComplete" protobuf:"varint,7,opt,name=globalCollectionComplete"`
+	JVMBuildID               string `json:"jvmBuildID,omitempty" protobuf:"bytes,8,opt,name=jvmBuildID"`
+	JVMSHA256                string `json:"jvmSHA256,omitempty" protobuf:"bytes,9,opt,name=jvmSHA256"`
+	GadgetRevision           string `json:"gadgetRevision,omitempty" protobuf:"bytes,10,opt,name=gadgetRevision"`
+	ProfilerRevision         string `json:"profilerRevision,omitempty" protobuf:"bytes,11,opt,name=profilerRevision"`
+	PatchSHA256              string `json:"patchSHA256,omitempty" protobuf:"bytes,12,opt,name=patchSHA256"`
 }
 
 type CallStackNode struct {

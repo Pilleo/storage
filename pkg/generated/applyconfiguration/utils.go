@@ -38,6 +38,8 @@ func ForKind(kind schema.GroupVersionKind) interface{} {
 		return &softwarecompositionv1beta1.ArgApplyConfiguration{}
 	case v1beta1.SchemeGroupVersion.WithKind("CallStack"):
 		return &softwarecompositionv1beta1.CallStackApplyConfiguration{}
+	case v1beta1.SchemeGroupVersion.WithKind("CallStackEvidence"):
+		return &softwarecompositionv1beta1.CallStackEvidenceApplyConfiguration{}
 	case v1beta1.SchemeGroupVersion.WithKind("CallStackNode"):
 		return &softwarecompositionv1beta1.CallStackNodeApplyConfiguration{}
 	case v1beta1.SchemeGroupVersion.WithKind("CollapseConfigEntry"):
@@ -92,6 +94,8 @@ func ForKind(kind schema.GroupVersionKind) interface{} {
 		return &softwarecompositionv1beta1.FileMetadataEntryApplyConfiguration{}
 	case v1beta1.SchemeGroupVersion.WithKind("Fix"):
 		return &softwarecompositionv1beta1.FixApplyConfiguration{}
+	case v1beta1.SchemeGroupVersion.WithKind("FrameSymbol"):
+		return &softwarecompositionv1beta1.FrameSymbolApplyConfiguration{}
 	case v1beta1.SchemeGroupVersion.WithKind("GeneratedNetworkPolicy"):
 		return &softwarecompositionv1beta1.GeneratedNetworkPolicyApplyConfiguration{}
 	case v1beta1.SchemeGroupVersion.WithKind("GrypeDocument"):

@@ -60,6 +60,34 @@ message CallStack {
   optional CallStackNode root = 1;
 }
 
+// CallStackEvidence records observational provenance, not runtime qualification.
+// PolicyEligibility and GlobalCollectionComplete stay explicitly false for observational evidence.
+message CallStackEvidence {
+  optional uint32 schemaVersion = 1;
+
+  optional string provider = 2;
+
+  optional string runtimeProfile = 3;
+
+  optional string eventScope = 4;
+
+  optional string identityScope = 5;
+
+  optional bool policyEligibility = 6;
+
+  optional bool globalCollectionComplete = 7;
+
+  optional string jvmBuildID = 8;
+
+  optional string jvmSHA256 = 9;
+
+  optional string gadgetRevision = 10;
+
+  optional string profilerRevision = 11;
+
+  optional string patchSHA256 = 12;
+}
+
 message CallStackNode {
   repeated CallStackNode children = 1;
 
@@ -477,6 +505,40 @@ message Fix {
   optional string state = 2;
 }
 
+// FrameSymbol carries provider-observed symbols without repurposing FileID or Lineno.
+// Missing source locations remain nil; BytecodeIndex is not a source line.
+message FrameSymbol {
+  optional uint32 schemaVersion = 1;
+
+  optional string provider = 2;
+
+  optional string functionName = 3;
+
+  optional string sourceFile = 4;
+
+  optional uint32 sourceLine = 5;
+
+  optional uint32 sourceColumn = 6;
+
+  // NativeAddress is an unsigned decimal string to preserve full uint64 precision in JSON.
+  optional string nativeAddress = 7;
+
+  optional uint32 bytecodeIndex = 8;
+
+  // RawPosition is an unsigned decimal string interpreted only within PositionDomain.
+  optional string rawPosition = 9;
+
+  optional string positionDomain = 10;
+
+  optional string scopeLookup = 11;
+
+  optional string scopeWalk = 12;
+
+  optional string bciState = 13;
+
+  optional string qualityDiagnostic = 14;
+}
+
 // GeneratedNetworkPolicy represents a generated NetworkPolicy.
 message GeneratedNetworkPolicy {
   optional .k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta metadata = 1;
@@ -595,6 +657,8 @@ message IdentifiedCallStack {
   optional string callID = 1;
 
   optional CallStack callStack = 2;
+
+  optional CallStackEvidence evidence = 3;
 }
 
 message IgnoreRule {
@@ -603,6 +667,21 @@ message IgnoreRule {
   optional string fixstate = 2;
 
   optional IgnoreRulePackage package = 3;
+
+  // SourceKind, SourceName and SourceNamespace identify the object that
+  // caused this suppression (e.g. "SecurityException", its name, and
+  // namespace for a namespaced object).
+  optional string sourcekind = 4;
+
+  optional string sourcename = 5;
+
+  optional string sourcenamespace = 6;
+
+  // Justification and ImpactStatement carry the stated reason for the
+  // suppression, in VEX vocabulary.
+  optional string justification = 7;
+
+  optional string impactstatement = 8;
 }
 
 message IgnoreRulePackage {
@@ -1380,6 +1459,8 @@ message StackFrame {
   optional string lineno = 2;
 
   optional int64 frameType = 3;
+
+  optional FrameSymbol symbol = 4;
 }
 
 message Statement {
